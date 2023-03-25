@@ -34,6 +34,8 @@ public class BookstoreUserDetails implements UserDetails {
         return bookstoreUser.getEmail();
     }
 
+    public Integer getAccountNumber() { return bookstoreUser.getAccountNumber(); }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
