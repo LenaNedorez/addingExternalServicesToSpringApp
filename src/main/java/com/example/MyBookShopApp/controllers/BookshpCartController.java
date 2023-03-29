@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.controllers;
 import com.example.MyBookShopApp.data.Book;
 import com.example.MyBookShopApp.data.BookRepository;
 import com.example.MyBookShopApp.data.PaymentService;
+import com.example.MyBookShopApp.data.purchase.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,12 +28,12 @@ public class BookshpCartController {
     }
 
     private final BookRepository bookRepository;
-    private final PaymentService paymentService;
+//    private final PaymentService paymentService;
+    private final PurchaseService purchaseService;
 
-    @Autowired
-    public BookshpCartController(BookRepository bookRepository, PaymentService paymentService) {
+    public BookshpCartController(BookRepository bookRepository, PurchaseService purchaseService) {
         this.bookRepository = bookRepository;
-        this.paymentService = paymentService;
+        this.purchaseService = purchaseService;
     }
 
     @GetMapping("/cart")
@@ -91,15 +92,27 @@ public class BookshpCartController {
         return "redirect:/books/" + slug;
     }
 
+//    @GetMapping("/pay")
+//    public RedirectView handlePay(@CookieValue(value = "cartContents", required = false) String cartContents) throws NoSuchAlgorithmException {
+//
+//        cartContents = cartContents.startsWith("/") ? cartContents.substring(1) : cartContents;
+//        cartContents = cartContents.endsWith("/") ? cartContents.substring(0, cartContents.length() - 1) :
+//                cartContents;
+//        String[] cookieSlugs = cartContents.split("/");
+//        List<Book> booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
+//        String paymentUrl = paymentService.getPaymentUrl(booksFromCookieSlugs);
+//        return new RedirectView(paymentUrl);
+//    }
+
     @GetMapping("/pay")
-    public RedirectView handlePay(@CookieValue(value = "cartContents", required = false) String cartContents) throws NoSuchAlgorithmException {
+    public String handlePay(@RequestParam("user_id") Integer userId, @CookieValue(value = "cartContents", required = false) String cartContents){
 
         cartContents = cartContents.startsWith("/") ? cartContents.substring(1) : cartContents;
         cartContents = cartContents.endsWith("/") ? cartContents.substring(0, cartContents.length() - 1) :
                 cartContents;
         String[] cookieSlugs = cartContents.split("/");
         List<Book> booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
-        String paymentUrl = paymentService.getPaymentUrl(booksFromCookieSlugs);
-        return new RedirectView(paymentUrl);
+        purchaseService.performInstorePurchase(userId, booksFromCookieSlugs);
+        return "Successful purchase!";
     }
 }

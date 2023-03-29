@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.data;
 
+import com.example.MyBookShopApp.data.purchase.Purchase;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -73,11 +74,13 @@ public class Book {
     private Double price;
 
     @JsonProperty
-    public Integer dicsountPrice() {
+    public Integer disсountPrice() {
         Integer discountedPriceInt = priceOld - Math.toIntExact(Math.round(price * priceOld));
         return discountedPriceInt;
     }
 
+    @ManyToMany(mappedBy = "purchasedBooks")
+    private List<Purchase> purchases;
 
     public Integer getIsBesteller() {
         return isBesteller;

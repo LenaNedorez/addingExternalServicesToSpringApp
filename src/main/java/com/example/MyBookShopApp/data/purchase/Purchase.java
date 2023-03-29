@@ -1,13 +1,16 @@
-package com.example.MyBookShopApp.data.paymentTransaction;
+package com.example.MyBookShopApp.data.purchase;
 
+import com.example.MyBookShopApp.data.Book;
 import com.example.MyBookShopApp.security.BookstoreUser;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "payment_transactions")
-public class PaymentTransaction {
+@Table(name = "purchases")
+public class Purchase {
 
     @Id
     @GeneratedValue
@@ -15,9 +18,11 @@ public class PaymentTransaction {
     @ManyToOne
     @JoinColumn(name = "users_id", referencedColumnName = "id")
     private BookstoreUser bookstoreUser;
-    private LocalDateTime timeStamp;
+    private Date purchaseDate;
     private Double amount;
     private boolean status;
+    @ManyToMany(mappedBy = "purchases")
+    private List<Book> purchasedBooks;
 
     public Integer getId() {
         return id;
@@ -35,12 +40,12 @@ public class PaymentTransaction {
         this.bookstoreUser = bookstoreUser;
     }
 
-    public LocalDateTime getTimeStamp() {
-        return timeStamp;
+    public Date getPurchaseDate() {
+        return purchaseDate;
     }
 
-    public void setTimeStamp(LocalDateTime timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
     }
 
     public Double getAmount() {
@@ -57,5 +62,13 @@ public class PaymentTransaction {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public List<Book> getPurchasedBooks() {
+        return purchasedBooks;
+    }
+
+    public void setPurchasedBooks(List<Book> purchasedBooks) {
+        this.purchasedBooks = purchasedBooks;
     }
 }

@@ -20,7 +20,7 @@ public class PaymentService {
 
 
     public String getPaymentUrl(List<Book> booksFromCookieSlugs) throws NoSuchAlgorithmException {
-        Double paymentSumTotal = booksFromCookieSlugs.stream().mapToDouble(Book::dicsountPrice).sum();
+        Double paymentSumTotal = booksFromCookieSlugs.stream().mapToDouble(Book::disсountPrice).sum();
         MessageDigest md = MessageDigest.getInstance("MD5");
         String invId = "5"; //just for testing TODO order indexing later
         md.update((merchantLogin + ":" + paymentSumTotal.toString() + ":" + invId + ":" + firstTestPass).getBytes());

@@ -9,8 +9,6 @@ public class BookstoreUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer accountNumber;
     private String name;
     private String email;
     private String phone;
@@ -56,7 +54,4 @@ public class BookstoreUser {
         this.password = password;
     }
 
-    public Integer getAccountNumber() { return accountNumber; }
-
-    public void setAccountNumber(Integer accountNumber) { this.accountNumber = accountNumber; }
 }
