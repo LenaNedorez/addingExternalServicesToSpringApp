@@ -1,12 +1,20 @@
 package com.example.MyBookShopApp.data.paymentTransaction;
 
 import com.example.MyBookShopApp.security.BookstoreUser;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "payment_transactions")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class PaymentTransaction {
 
     @Id
@@ -19,43 +27,4 @@ public class PaymentTransaction {
     private Double amount;
     private boolean status;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public BookstoreUser getBookstoreUser() {
-        return bookstoreUser;
-    }
-
-    public void setBookstoreUser(BookstoreUser bookstoreUser) {
-        this.bookstoreUser = bookstoreUser;
-    }
-
-    public LocalDateTime getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(LocalDateTime timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
 }

@@ -1,6 +1,10 @@
 package com.example.MyBookShopApp.data.instoreAccount;
 
 import com.example.MyBookShopApp.security.BookstoreUser;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,6 +13,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "instore_accounts")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class InstoreAccount {
 
     @Id
@@ -16,37 +24,4 @@ public class InstoreAccount {
     @OneToOne
     private BookstoreUser bookstoreUser;
     private Double currentAmount;
-
-    public InstoreAccount() {
-    }
-
-    public InstoreAccount(Integer id, BookstoreUser bookstoreUser, Double currentAmount) {
-        this.id = id;
-        this.bookstoreUser = bookstoreUser;
-        this.currentAmount = currentAmount;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public BookstoreUser getBookstoreUser() {
-        return bookstoreUser;
-    }
-
-    public void setBookstoreUser(BookstoreUser bookstoreUser) {
-        this.bookstoreUser = bookstoreUser;
-    }
-
-    public Double getCurrentAmount() {
-        return currentAmount;
-    }
-
-    public void setCurrentAmount(Double currentAmount) {
-        this.currentAmount = currentAmount;
-    }
 }

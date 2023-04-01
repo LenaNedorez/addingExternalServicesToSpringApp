@@ -13,13 +13,13 @@ public class InstoreAccountService {
         this.instoreAccountRepository = instoreAccountRepository;
     }
 
-    public void putMoneyIntoInstoreAccount(Integer userId, Double amount){
+    public synchronized void putMoneyIntoInstoreAccount(Integer userId, Double amount){
         InstoreAccount instoreAccount = instoreAccountRepository.findInstoreAccountByBookstoreUser_Id(userId);
         instoreAccount.setCurrentAmount(instoreAccount.getCurrentAmount() + amount);
         instoreAccountRepository.save(instoreAccount);
     }
 
-    public void withdrawMoneyFromInstoreAccount(Integer userId, Double amount) {
+    public synchronized void withdrawMoneyFromInstoreAccount(Integer userId, Double amount) {
         InstoreAccount instoreAccount = instoreAccountRepository.findInstoreAccountByBookstoreUser_Id(userId);
         instoreAccount.setCurrentAmount(instoreAccount.getCurrentAmount() - amount);
         instoreAccountRepository.save(instoreAccount);
