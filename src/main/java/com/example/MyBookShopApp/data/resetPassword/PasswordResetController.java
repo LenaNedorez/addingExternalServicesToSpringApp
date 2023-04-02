@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.data.resetPassword;
 
-import com.example.MyBookShopApp.security.BookstoreUserDetails;
+import com.example.MyBookShopApp.errs.InvalidPasswordTokenException;
 import com.example.MyBookShopApp.security.BookstoreUserDetailsService;
 import com.example.MyBookShopApp.security.ContactConfirmationPayload;
 import com.example.MyBookShopApp.security.ContactConfirmationResponse;
@@ -9,9 +9,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -43,9 +42,22 @@ public class PasswordResetController {
         message.setTo(payload.getContact());
         message.setSubject("Bookstore reset password");
         message.setText("In order to reset your password, click the link:"
-                        + "/user/changePassword?token=" + token);
+                        + "localhost:8085/user/changePassword?token=" + token);
         javaMailSender.send(message);
         response.setResult("true");
         return response;
+    }
+
+    @GetMapping("/user/changePassword")
+    public String showChangePasswordPage(Model model,
+                                         @RequestParam("token") String token) throws InvalidPasswordTokenException {
+        String result = passwordResetService.validatePasswordResetToken(token);
+        if(result != null) {
+            throw new InvalidPasswordTokenException("There's an error occured. To change your " +
+                                                    "password, please, try again");
+        } else {
+            model.addAttribute("token", token);
+            return "redirect:/updatePassword.html";
+        }
     }
 }

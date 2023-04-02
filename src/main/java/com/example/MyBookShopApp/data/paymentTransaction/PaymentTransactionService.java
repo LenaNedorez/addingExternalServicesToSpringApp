@@ -25,6 +25,7 @@ public class PaymentTransactionService {
     private BookstoreUserRepository bookstoreUserRepository;
     private InstoreAccountService instoreAccountService;
 
+    @Autowired
     public PaymentTransactionService(PaymentTransactionRepository paymentTransactionRepository, BookstoreUserRepository bookstoreUserRepository, InstoreAccountService instoreAccountService) {
         this.paymentTransactionRepository = paymentTransactionRepository;
         this.bookstoreUserRepository = bookstoreUserRepository;

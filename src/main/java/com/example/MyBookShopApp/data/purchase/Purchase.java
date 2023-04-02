@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -25,7 +25,7 @@ public class Purchase {
     @ManyToOne
     @JoinColumn(name = "users_id", referencedColumnName = "id")
     private BookstoreUser bookstoreUser;
-    private Date purchaseDate;
+    private LocalDateTime purchaseDate;
     private Double amount;
     private boolean status;
     @ManyToMany(mappedBy = "purchases")
